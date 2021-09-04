@@ -1,82 +1,66 @@
 import Head from 'next/head'
-
+import { useEffect, useState } from 'react'
+import { Transition } from '@headlessui/react';
 export default function Home() {
+
+  const [isSubscribed, setSubscribed] = useState(false);
+  const [isRingTheBell, setIsRingTheBell] = useState(false);
+  const [isShow, setIsShow] = useState(false);
+
+  useEffect(() => {
+    setIsShow(true);
+    setTimeout(() => {
+      //setIsShow(false);
+    },5000);
+  },[]);
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
 
-      <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-        <h1 className="text-6xl font-bold">
-          Welcome to{' '}
-          <a className="text-blue-600" href="https://nextjs.org">
-            Next.js!
-          </a>
-        </h1>
+    <div className="bg-blue-500 w-screen h-screen flex justify-center items-center flex-col">
+      <Transition 
+      show={isShow}
+      enter="transition-all duration-[1500ms]"
+      enterFrom="opacity-0 translate-y-full"
+      enterTo="opacity-100 translate-y-0"
+      leave="transition-all duration-[1500ms]"
+      leaveFrom="opacity-100 translate-y-0"
+      leaveTo="opacity-0 translate-y-full">
+        <div className="w-[700px] bg-white rounded-xl p-5 pt-0 flex flex-col">
+          <img src="images/YouTube-Logo.png" className="w-28"/>
+          <div className="flex space-x-5 items-center justify-between">
+            <div className="flex space-x-5 items-center">
+              {/* Logo */}
+              <img src="images/me-200.jpg" className="rounded-full w-20 h-20"/>
+              {/* Channel Name & slogan */}
+              <div>
+                <h1 className="text-3xl font-bold">Coding with Tien</h1>
+                <h2 className="text-lg text-gray-500">Just the way I did something!</h2>
+              </div>
+            </div>
+            {/* Subscribe button and bell */}
+            <div className="flex space-x-3 items-center justify-end ml-auto relative">
+              <button 
+              onClick={() => {setSubscribed(!isSubscribed)}}
+              className={`text-white px-5 py-2 rounded text-lg
+              font-bold uppercase
+              ${isSubscribed ? 'bg-gray-300' : 'bg-red-500'}`}>
+                {isSubscribed ? 'subscribed' : 'subscribe'}
+              </button>
+              
+              {
+                isRingTheBell ? 
+                <svg onClick={() => {setIsRingTheBell(!isRingTheBell)}} xmlns="http://www.w3.org/2000/svg" height="36px" viewBox="0 0 24 24" width="36px" fill="#666"><path d="M0 0h24v24H0z" fill="none"/>
+                  <path d="M7.58 4.08L6.15 2.65C3.75 4.48 2.17 7.3 2.03 10.5h2c.15-2.65 1.51-4.97 3.55-6.42zm12.39 6.42h2c-.15-3.2-1.73-6.02-4.12-7.85l-1.42 1.43c2.02 1.45 3.39 3.77 3.54 6.42zM18 11c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2v-5zm-6 11c.14 0 .27-.01.4-.04.65-.14 1.18-.58 1.44-1.18.1-.24.15-.5.15-.78h-4c.01 1.1.9 2 2.01 2z"/>
+                </svg>
+                : <svg onClick={() => {setIsRingTheBell(!isRingTheBell)}} xmlns="http://www.w3.org/2000/svg" height="36px" viewBox="0 0 24 24" width="36px" fill="#999">
+                    <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+                  </svg>
+              }
 
-        <p className="mt-3 text-2xl">
-          Get started by editing{' '}
-          <code className="p-3 font-mono text-lg bg-gray-100 rounded-md">
-            pages/index.js
-          </code>
-        </p>
 
-        <div className="flex flex-wrap items-center justify-around max-w-4xl mt-6 sm:w-full">
-          <a
-            href="https://nextjs.org/docs"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Find in-depth information about Next.js features and API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Learn &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Learn about Next.js in an interactive course with quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Examples &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Discover and deploy boilerplate example Next.js projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Deploy &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+            </div>
+          </div>
         </div>
-      </main>
-
-      <footer className="flex items-center justify-center w-full h-24 border-t">
-        <a
-          className="flex items-center justify-center"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="h-4 ml-2" />
-        </a>
-      </footer>
+      </Transition>
     </div>
   )
 }
